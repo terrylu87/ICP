@@ -8,7 +8,7 @@ set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 project(icp)
 
 #find_package(OpenCV 4.1 REQUIRED)
-find_package(OpenCV REQUIRED)
+#find_package(OpenCV REQUIRED)
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIBRARY_DIRS})
@@ -21,8 +21,10 @@ include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
- 
-# Executable for create matrix exercise
+
+find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+
+# Executable for create ICP exercise
 add_executable (icp src/icp.cpp src/main.cpp src/test.cpp)
-#add_executable (icp src/main.cpp src/main.cpp src/test.cpp)
-target_link_libraries (icp ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
+target_link_libraries (icp ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} Eigen3::Eigen)
+target_link_libraries (icp ${PCL_LIBRARIES} Eigen3::Eigen)
